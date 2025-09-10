@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import entropy
 
 
 def visualize_results(agents, critical_episodes, social_interactions, episodes, level_up_episodes,

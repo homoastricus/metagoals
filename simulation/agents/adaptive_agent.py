@@ -1,15 +1,13 @@
-import numpy as np
 from collections import deque
-from scipy import stats
-from scipy.linalg import eig
+
 import networkx as nx
+import numpy as np
 
 try:
     from sklearn.cluster import KMeans
 except ImportError:
     KMeans = None
 
-from ..config.parameters import *
 from ..config.parameters import ENVIRONMENT_PARAMS
 from ..config.parameters import AGENT_PARAMS
 from ..config.parameters import ANALYSIS_PARAMS
@@ -334,9 +332,9 @@ class AdaptiveAgent:
         self.last_state = state
 
         # Q-learning с адаптивным обучением
-        old_value = self.Q[state, action]  # ← ОПРЕДЕЛЯЕМ old_value ЗДЕСЬ
+        old_value = self.Q[state, action]
         next_max = np.max(self.Q[next_state])
-        new_value = old_value + self.individual_learning_rate * (  # ← ОПРЕДЕЛЯЕМ new_value ЗДЕСЬ
+        new_value = old_value + self.individual_learning_rate * (
                 adjusted_reward + RL_PARAMS['gamma'] * next_max - old_value)
         self.Q[state, action] = new_value
 
@@ -349,7 +347,6 @@ class AdaptiveAgent:
             energy_change = energy_base_change
         self.energy = max(0, min(AGENT_PARAMS['max_energy'], self.energy + energy_change))
 
-        # ОБНОВЛЕНИЕ ЗНАНИЯ - ПЕРЕМЕЩАЕМ ЭТОТ БЛОК СЮДА, ПОСЛЕ ОПРЕДЕЛЕНИЯ new_value и old_value
         knowledge_base_gain = abs(new_value - old_value) * META_GOAL_PARAMS.get('knowledge_learning_factor', 0.2)
         if self.meta_active['pred']:
             knowledge_gain = knowledge_base_gain * META_GOAL_PARAMS.get('knowledge_pred_multiplier', 1.4)
@@ -513,8 +510,8 @@ class AdaptiveAgent:
         effective_thresholds = {}
 
         effective_thresholds['E_eff_self'] = (
-                    self.thresholds['E_eff'] * META_GOAL_PARAMS['threshold_scale_factor'] + self.entropy_barriers[
-                'self'] * self.S)
+                self.thresholds['E_eff'] * META_GOAL_PARAMS['threshold_scale_factor'] + self.entropy_barriers[
+            'self'] * self.S)
         effective_thresholds['E_eff_exp'] = (self.thresholds['E_eff'] + self.entropy_barriers['exp'] * self.S)
         effective_thresholds['C_pred'] = (self.thresholds['C'] + self.entropy_barriers['pred'] * self.S)
         effective_thresholds['Phi_pred'] = (self.thresholds['Phi'] + self.entropy_barriers['pred'] * self.S)

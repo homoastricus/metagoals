@@ -1,5 +1,4 @@
 from simulation.simulation import simulate_advanced
-from simulation.simulation import simulate_advanced
 
 if __name__ == "__main__":
     print("Запуск эволюционной симуляции с кооперацией...")

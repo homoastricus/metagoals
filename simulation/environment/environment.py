@@ -1,4 +1,5 @@
 import numpy as np
+
 from simulation.config.parameters import ENVIRONMENT_PARAMS
 
 
