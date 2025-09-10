@@ -146,23 +146,7 @@ results = simulate_advanced(
 )
 ```
 
-### Пакетный запуск
-```python
-# Мultiple эксперименты
-for mutation_rate in [0.1, 0.15, 0.2]:
-    custom_params = {
-        'EVOLUTION_PARAMS': {'mutation_rate': mutation_rate}
-    }
-    
-    results = simulate_advanced(
-        episodes=500,
-        initial_num_agents=15,
-        custom_params=custom_params,
-        experiment_name=f"mutation_{mutation_rate}"
-    )
-```
-
-## Результаты исследований
+## Результаты исследований (одного из)
 
 ### Статистически значимые результаты:
 - **100% агентов** активировали S_pred и S_exp цели
